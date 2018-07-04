@@ -1,0 +1,4 @@
+<resources>
+    <string name="common_prise_success">点赞成功</string>
+    <string name="common_comment_success">评论成功</string>
+</resources>
