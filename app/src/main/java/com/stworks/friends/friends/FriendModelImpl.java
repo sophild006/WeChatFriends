@@ -21,7 +21,7 @@ import java.util.List;
 
 public class FriendModelImpl implements FriendContract.FriendModel {
     @Override
-    public void getData(final HttpCallBack<List<FriendsList>> callBack, int pageSize, final int pageNumber) {
+    public void getData(final HttpCallBack<List<FriendsList>> callBack, final int pageSize, final int pageNumber) {
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -33,7 +33,14 @@ public class FriendModelImpl implements FriendContract.FriendModel {
                     if (callBack != null) {
                         List<FriendsList> friendsLists1 = Arrays.asList(friendsLists);
                         List<FriendsList> mList = new ArrayList<>(friendsLists1);
-                        callBack.onResponse(mList, null);
+                        if (mList.size() >= pageNumber * pageSize + 5) {
+                            callBack.onResponse(mList.subList(pageNumber * pageSize, pageNumber * pageSize + 5), null);
+                        } else {
+                            callBack.onResponse(new ArrayList<FriendsList>(), null);
+                        }
+//                        else {
+//                            callBack.onResponse(mList.subList((pageNumber - 1) * pageSize + 5, mList.size()), null);
+//                        }
                     }
                 } else {
                     SWLog.d("friendsLists  is null");
@@ -46,5 +53,20 @@ public class FriendModelImpl implements FriendContract.FriendModel {
     public void getUserInfo(HttpCallBack<UserInfo> callBack) {
         BaseEntity<UserInfo> userInfo_ = JsonConvert.fromJson("userInfo", GlobalContext.getAppContext(), UserInfo.class);
         callBack.onResponse(userInfo_.getRt(), null);
+    }
+
+    @Override
+    public void doComment(HttpCallBack callBack) {
+
+        if (callBack != null) {
+            callBack.onResponse(null, null);
+        }
+    }
+
+    @Override
+    public void doParise(HttpCallBack callBack) {
+        if (callBack != null) {
+            callBack.onResponse(null, null);
+        }
     }
 }

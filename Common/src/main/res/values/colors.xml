@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="common_base_B5B5B5">#B5B5B5</color>
+    <color name="common_base_697A9F">#697A9F</color>
+    <color name="common_color_text_hint">#abb1b6</color>
+</resources>

@@ -1,33 +1,23 @@
 package com.stworks.friends;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
-import com.stworks.common.base.bean.BaseEntity;
 import com.stworks.common.base.bean.UserInfo;
-import com.stworks.common.base.ui.BaseActivity;
 import com.stworks.common.base.ui.BaseMvpActivity;
-import com.stworks.common.utils.JsonConvert;
-import com.stworks.common.utils.SWLog;
 import com.stworks.common.utils.ViewUtils;
-import com.stworks.friends.Config.ViewConfig;
+import com.stworks.friends.config.ViewConfig;
 import com.stworks.friends.adapter.FriendsAdapter;
-import com.stworks.friends.bean.FriendsBean;
 import com.stworks.friends.bean.FriendsList;
 import com.stworks.friends.friends.FriendContract;
 import com.stworks.friends.friends.FriendPresenterImpl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,12 +44,12 @@ public class MainActivity extends BaseMvpActivity<FriendContract.FriendPresenter
      * header 部分
      */
     private View headerView;
-    private ImageView ivHeader;
+    private ImageView ivHeader, ivHeaderBg;
     private TextView tvUserName;
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binder = ButterKnife.bind(this);
         initView();
@@ -80,6 +70,7 @@ public class MainActivity extends BaseMvpActivity<FriendContract.FriendPresenter
     @Override
     public void initData() {
         getPresenter().init(this);
+        mAdapter.setPresenter(getPresenter());
         getPresenter().getData(PAGE_SIZE, CURRENT_PAGE);
         getPresenter().getUserInfo();
     }
@@ -87,9 +78,10 @@ public class MainActivity extends BaseMvpActivity<FriendContract.FriendPresenter
     @Override
     protected void initView() {
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setRefreshing(true);
         headerView = View.inflate(this, R.layout.friends_header, null);
         ivHeader = headerView.findViewById(R.id.iv_header);
+        ivHeaderBg = headerView.findViewById(R.id.iv_header_bg);
         tvUserName = headerView.findViewById(R.id.tv_user_name);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new FriendsAdapter(R.layout.friends_item);
@@ -104,6 +96,7 @@ public class MainActivity extends BaseMvpActivity<FriendContract.FriendPresenter
             @Override
             public void onLoadMoreRequested() {
                 getPresenter().getData(PAGE_SIZE, CURRENT_PAGE);
+                CURRENT_PAGE++;
             }
         }, recyclerView);
     }
@@ -154,15 +147,18 @@ public class MainActivity extends BaseMvpActivity<FriendContract.FriendPresenter
 
     @Override
     public void showUserInfo(UserInfo userInfo) {
-
-        ViewUtils.intoImageView(this, userInfo.getAvatar(), ivHeader);
-        tvUserName.setText(ViewUtils.getContent(userInfo.getUsername()));
+        if (userInfo != null) {
+            ViewUtils.intoImageView(this, userInfo.getAvatar(), ivHeader);
+            tvUserName.setText(ViewUtils.getContent(userInfo.getUsername()));
+        }
+        ViewUtils.intoImageView(this, "http://www.thoughtworks.com/imgs/hosted/header.jpg", ivHeaderBg);
     }
 
     @Override
     public void onRefresh() {
         CURRENT_PAGE = 0;
         swipeRefreshLayout.setRefreshing(true);
+        getPresenter().getUserInfo();
         getPresenter().getData(PAGE_SIZE, CURRENT_PAGE);
     }
 

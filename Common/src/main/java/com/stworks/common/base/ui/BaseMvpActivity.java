@@ -1,8 +1,6 @@
 package com.stworks.common.base.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.stworks.common.base.mvp.MainPresenter;
@@ -18,7 +16,7 @@ public abstract class BaseMvpActivity<P extends MainPresenter> extends BaseActiv
     private Toast toast;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
@@ -26,11 +24,14 @@ public abstract class BaseMvpActivity<P extends MainPresenter> extends BaseActiv
     @Override
     public void showToast(String message) {
 
+        toast.setText(message);
+        toast.show();
     }
 
     @Override
     public void showToast(int statusCode, String message) {
-
+        toast.setText(message);
+        toast.show();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.stworks.friends.Config;
+package com.stworks.friends.config;
 
 /**
  * Created by wwq on 2018/7/4.

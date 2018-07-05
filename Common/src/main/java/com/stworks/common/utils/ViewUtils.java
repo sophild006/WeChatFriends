@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.stworks.common.R;
 
 /**
  * Created by wwq on 2018/7/5.
@@ -20,7 +21,7 @@ public class ViewUtils {
      * @param imageView
      */
     public static void intoImageView(Context context, String url, ImageView imageView) {
-        Glide.with(context).load(url).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
+        Glide.with(context).load(url).asBitmap().placeholder(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
     }
 
     /**

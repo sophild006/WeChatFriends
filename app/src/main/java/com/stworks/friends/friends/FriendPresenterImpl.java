@@ -5,8 +5,8 @@ import android.content.Context;
 import com.stworks.common.base.bean.UserInfo;
 import com.stworks.common.base.mvp.HttpCallBack;
 import com.stworks.common.base.mvp.MainBasePresenter;
-import com.stworks.friends.Config.ViewConfig;
-import com.stworks.friends.R;
+import com.stworks.friends.config.ViewConfig;
+import com.stworks.friends.bean.CommentInfo;
 import com.stworks.friends.bean.FriendsList;
 
 import java.util.List;
@@ -35,6 +35,11 @@ public class FriendPresenterImpl extends MainBasePresenter<FriendContract.Friend
             public void onResponse(List<FriendsList> friendsLists, String error) {
                 if (friendsLists != null && friendsLists.size() > 0) {
                     for (FriendsList list : friendsLists) {
+                        if (list != null && list.getComments() != null && list.getComments().size() > 0) {
+                            for (CommentInfo info : list.getComments()) {
+                                info.build(mContext);
+                            }
+                        }
                         if (list.getImages() != null && list.getImages().size() > 0) {
                             list.setItemType(ViewConfig.WORD_AND_PICTURE);
                         } else {
@@ -42,23 +47,30 @@ public class FriendPresenterImpl extends MainBasePresenter<FriendContract.Friend
                         }
                     }
                     if (pageNumber == 0) {
-                        getView().setViewStatus(ViewConfig.NORMAL_STATUS);
-                        getView().showData(friendsLists);
+                        if (getView() != null)
+                            getView().setViewStatus(ViewConfig.NORMAL_STATUS);
+                        if (getView() != null)
+                            getView().showData(friendsLists);
                     } else {
-                        getView().showMoreData(friendsLists);
+                        if (getView() != null)
+                            getView().showMoreData(friendsLists);
                     }
                 } else {
                     if (friendsLists == null) {
                         if (pageNumber == 0) {
-                            getView().setViewStatus(ViewConfig.ERROR_STATUS);
+                            if (getView() != null)
+                                getView().setViewStatus(ViewConfig.ERROR_STATUS);
                         } else {
-                            getView().loadFriendsFailed();
+                            if (getView() != null)
+                                getView().loadFriendsFailed();
                         }
                     } else {
                         if (pageNumber == 0) {
-                            getView().setViewStatus(ViewConfig.EMPTY_STATUS);
+                            if (getView() != null)
+                                getView().setViewStatus(ViewConfig.EMPTY_STATUS);
                         } else {
-                            getView().loadFriendsEnd();
+                            if (getView() != null)
+                                getView().loadFriendsEnd();
                         }
                     }
                 }
@@ -71,12 +83,31 @@ public class FriendPresenterImpl extends MainBasePresenter<FriendContract.Friend
         model.getUserInfo(new HttpCallBack<UserInfo>() {
             @Override
             public void onResponse(UserInfo userInfo, String error) {
-                if (userInfo != null) {
+                if (getView() != null)
                     getView().showUserInfo(userInfo);
-                }else{
-                }
             }
         });
     }
 
+    @Override
+    public void doParise() {
+        model.doParise(new HttpCallBack() {
+            @Override
+            public void onResponse(Object o, String error) {
+                if (getView() != null)
+                    getView().doParise();
+            }
+        });
+    }
+
+    @Override
+    public void doComment() {
+        model.doComment(new HttpCallBack() {
+            @Override
+            public void onResponse(Object o, String error) {
+                if (getView() != null)
+                    getView().doComment();
+            }
+        });
+    }
 }

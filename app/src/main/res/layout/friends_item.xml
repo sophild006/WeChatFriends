@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="fdasfds"
+                    android:text="默认用户名"
                     android:textColor="#2a6aa3"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
-                android:text="fdasfdsfdafdasfd" />
+                android:text="默认的内容" />
 
             <!-- 不同的地方 -->
             <ViewStub
@@ -53,46 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="fadsfd"
-                    android:textColor="#414040"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:text="删除"
-                    android:textColor="#8290AF"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-
-                <View
-                    android:layout_width="0dip"
-                    android:layout_height="1dip"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/iv_menu" />
-            </LinearLayout>
-
+            <include layout="@layout/friends_item_menu"/>
+            <include layout="@layout/friends_item_parise_comment_list"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

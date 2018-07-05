@@ -53,12 +53,20 @@ public interface FriendContract {
         void getData(int pageSize, int pageNumber);
 
         void getUserInfo();
+
+        void doParise();
+
+        void doComment();
     }
 
     interface FriendModel {
         void getData(HttpCallBack<List<FriendsList>> callBack, int pageSize, int pageNumber);
 
         void getUserInfo(HttpCallBack<UserInfo> userInfo);
+
+        void doParise(HttpCallBack callBack);
+
+        void doComment(HttpCallBack callBack);
     }
 
 }

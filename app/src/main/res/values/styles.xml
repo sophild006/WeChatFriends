@@ -10,4 +10,9 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="friends_menu_pop_anim">
+        <item name="android:windowEnterAnimation">@anim/friends_menu_enter</item>
+        <item name="android:windowExitAnimation">@anim/friends_menu_exit</item>
+    </style>
+
 </resources>

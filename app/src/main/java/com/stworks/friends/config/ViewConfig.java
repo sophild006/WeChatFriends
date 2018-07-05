@@ -1,6 +1,4 @@
-package com.stworks.friends.Config;
-
-import java.security.PublicKey;
+package com.stworks.friends.config;
 
 /**
  * Created by wwq on 2018/7/4.
@@ -23,5 +21,4 @@ public class ViewConfig {
 
     public static final int ONLY_WORDS = 0;
     public static final int WORD_AND_PICTURE = 1;
-    public static final int WORD_URL = 2;
 }
